@@ -1,380 +1,131 @@
-Sao Paulo
-Campinas
-100.00
-Rio de Janeiro
-440.00
-Rio de Janeiro
-440.00
-Rio de Janeiro
-440.00
-Campinas
-100.00
-Rio de Janeiro
-440.00
+Arad
+Zerind
+75
+Timisoara
+118
+Sibiu
+140
 :
-Rio de Janeiro
-Petropolis
-60.00
-Petropolis
-60.00
-Niteroi
-20.00
-Niteroi
-20.00
-Sao Paulo
-440.00
-Niteroi
-20.00
-Petropolis
-60.00
-Sao Paulo
-440.00
-Niteroi
-20.00
-Petropolis
-60.00
-Sao Paulo
-440.00
-Sao Paulo
-440.00
+Zerind
+Arad
+75
+Oradea
+71
 :
-Campinas
-Sao Paulo
-100.00
-Sao Paulo
-100.00
+Oradea
+Zerind
+71
+Sibiu
+151
 :
-Petropolis
-Teresopolis
-30.00
-Teresopolis
-30.00
-Rio de Janeiro
-60.00
-Niteroi
-60.00
-Teresopolis
-30.00
-Niteroi
-60.00
-Rio de Janeiro
-60.00
-Teresopolis
-30.00
-Niteroi
-60.00
-Niteroi
-60.00
-Rio de Janeiro
-60.00
-Rio de Janeiro
-60.00
+Timisoara
+Arad
+118
+Lugoj
+111
 :
-Niteroi
-Petropolis
-60.00
-Petropolis
-60.00
-Rio de Janeiro
-20.00
-Rio de Janeiro
-20.00
-Petropolis
-60.00
-Petropolis
-60.00
-Rio de Janeiro
-20.00
-Rio de Janeiro
-20.00
+Lugoj
+Timisoara
+111
+Mehadia
+70
 :
-Teresopolis
-Nova Friburgo
-40.00
-Nova Friburgo
-40.00
-Petropolis
-30.00
-Petropolis
-30.00
-Nova Friburgo
-40.00
-Nova Friburgo
-40.00
-Petropolis
-30.00
-Petropolis
-30.00
+Mehadia
+Lugoj
+70
+Drobeta
+75
 :
-Nova Friburgo
-Cachoeiras de Macacu
-25.00
-Cachoeiras de Macacu
-25.00
-Teresopolis
-40.00
-Teresopolis
-40.00
-Cachoeiras de Macacu
-25.00
-Cachoeiras de Macacu
-25.00
-Teresopolis
-40.00
-Teresopolis
-40.00
+Drobeta
+Mehadia
+75
+Craiova
+120
 :
-Cachoeiras de Macacu
-Guapimirim
-35.00
-Guapimirim
-35.00
-Nova Friburgo
-25.00
-Nova Friburgo
-25.00
-Guapimirim
-35.00
-Guapimirim
-35.00
-Nova Friburgo
-25.00
-Nova Friburgo
-25.00
+Craiova
+Drobeta
+120
+Rimnicu Vilcea
+146
+Pitesti
+138
 :
-Guapimirim
-Mage
-20.00
-Mage
-20.00
-Cachoeiras de Macacu
-35.00
-Cachoeiras de Macacu
-35.00
-Mage
-20.00
-Mage
-20.00
-Cachoeiras de Macacu
-35.00
-Cachoeiras de Macacu
-35.00
+Rimnicu Vilcea
+Sibiu
+80
+Craiova
+146
+Pitesti
+97
 :
-Mage
-Duque de Caxias
-25.00
-Duque de Caxias
-25.00
-Guapimirim
-20.00
-Guapimirim
-20.00
-Duque de Caxias
-25.00
-Duque de Caxias
-25.00
-Guapimirim
-20.00
-Guapimirim
-20.00
+Sibiu
+Arad
+140
+Oradea
+151
+Fagaras
+99
+Rimnicu Vilcea
+80
 :
-Duque de Caxias
-Nilopolis
-15.00
-Nilopolis
-15.00
-Mage
-25.00
-Mage
-25.00
-Nilopolis
-15.00
-Nilopolis
-15.00
-Mage
-25.00
-Mage
-25.00
+Fagaras
+Sibiu
+99
+Bucharest
+211
 :
-Nilopolis
-Mesquita
-10.00
-Mesquita
-10.00
-Duque de Caxias
-15.00
-Duque de Caxias
-15.00
-Mesquita
-10.00
-Mesquita
-10.00
-Duque de Caxias
-15.00
-Duque de Caxias
-15.00
+Pitesti
+Rimnicu Vilcea
+97
+Craiova
+138
+Bucharest
+101
 :
-Mesquita
-Belford Roxo
-15.00
-Belford Roxo
-15.00
-Nilopolis
-10.00
-Nilopolis
-10.00
-Belford Roxo
-15.00
-Belford Roxo
-15.00
-Nilopolis
-10.00
-Nilopolis
-10.00
+Bucharest
+Fagaras
+211
+Pitesti
+101
+Giurgiu
+90
+Urziceni
+85
 :
-Belford Roxo
-Sao Joao de Meriti
-10.00
-Sao Joao de Meriti
-10.00
-Mesquita
-15.00
-Mesquita
-15.00
-Sao Joao de Meriti
-10.00
-Sao Joao de Meriti
-10.00
-Mesquita
-15.00
-Mesquita
-15.00
+Giurgiu
+Bucharest
+90
 :
-Sao Joao de Meriti
-Queimados
-18.00
-Queimados
-18.00
-Belford Roxo
-10.00
-Belford Roxo
-10.00
-Queimados
-18.00
-Queimados
-18.00
-Belford Roxo
-10.00
-Belford Roxo
-10.00
+Urziceni
+Bucharest
+85
+Hirsova
+98
+Vaslui
+142
 :
-Queimados
-Japeri
-20.00
-Japeri
-20.00
-Sao Joao de Meriti
-18.00
-Sao Joao de Meriti
-18.00
-Japeri
-20.00
-Japeri
-20.00
-Sao Joao de Meriti
-18.00
-Sao Joao de Meriti
-18.00
+Hirsova
+Urziceni
+98
+Eforie
+86
 :
-Japeri
-Paracambi
-15.00
-Paracambi
-15.00
-Queimados
-20.00
-Queimados
-20.00
-Paracambi
-15.00
-Paracambi
-15.00
-Queimados
-20.00
-Queimados
-20.00
+Eforie
+Hirsova
+86
 :
-Paracambi
-Mendes
-25.00
-Mendes
-25.00
-Japeri
-15.00
-Japeri
-15.00
-Mendes
-25.00
-Mendes
-25.00
-Japeri
-15.00
-Japeri
-15.00
+Vaslui
+Urziceni
+142
+Iasi
+92
 :
-Mendes
-Paty do Alferes
-20.00
-Paty do Alferes
-20.00
-Paracambi
-25.00
-Paracambi
-25.00
-Paty do Alferes
-20.00
-Paty do Alferes
-20.00
-Paracambi
-25.00
-Paracambi
-25.00
+Iasi
+Vaslui
+92
+Neamt
+87
 :
-Paty do Alferes
-Vassouras
-30.00
-Vassouras
-30.00
-Mendes
-20.00
-Mendes
-20.00
-Vassouras
-30.00
-Vassouras
-30.00
-Mendes
-20.00
-Mendes
-20.00
-:
-Vassouras
-Barra do Pirai
-40.00
-Paty do Alferes
-30.00
-Paty do Alferes
-30.00
-Barra do Pirai
-40.00
-Paty do Alferes
-30.00
-Paty do Alferes
-30.00
-:
-Barra do Pirai
-Vassouras
-40.00
-Vassouras
-40.00
-:
+Neamt
+Iasi
+87
