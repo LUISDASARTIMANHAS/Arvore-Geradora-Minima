@@ -3,6 +3,7 @@
 #include "data/libs/fileSys.cpp"
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
+    int count = 0;
     for (int i = 0; i < grafo->numCidades; i++) {
     printf("\nCidade: %s\n", grafo->cidades[i].nome);
     TVizinho *vizinho = grafo->cidades[i].vizinhos;
@@ -10,7 +11,9 @@ void exibirGrafo(TGrafo *grafo) {
         printf(" Vizinho: %s, Distância: %.2f\n", vizinho->nome, vizinho->distancia);
         vizinho = vizinho->prox;
         }
+        count++;
     }
+    printf("\n Total de Cidades: %d\n", count);
 }
 
 //=================================================
