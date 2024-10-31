@@ -4,12 +4,14 @@
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
     int count = 0;
+
     for (int i = 0; i < grafo->numCidades; i++) {
     printf("\nCidade: %s\n", grafo->cidades[i].nome);
     TVizinho *vizinho = grafo->cidades[i].vizinhos;
+        
         while (vizinho != NULL) {
-        printf(" Vizinho: %s, Distância: %.2f\n", vizinho->nome, vizinho->distancia);
-        vizinho = vizinho->prox;
+            printf(" Vizinho: %s, Distância: %.2f\n", vizinho->nome, vizinho->distancia);
+            vizinho = vizinho->prox;
         }
         count++;
     }
