@@ -1,6 +1,6 @@
 // Feito por: Lucas Garcia E Luis Augusto
 #include "grafoCidades.h"
-#include "data/libs/fileSys.cpp"
+#include "data/libs/desenharArvore.cpp"
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
     int count = 0;
@@ -15,6 +15,7 @@ void exibirGrafo(TGrafo *grafo) {
         }
         count++;
     }
+
     printf("\n Total de Cidades: %d\n", count);
 }
 
@@ -233,6 +234,193 @@ void exibirCidadeEVizinho(TGrafo *grafo){
     exibirCidade(grafo,nomeCidade);
 }
 
+//=================================================
+int compararArestas(const void *a, const void *b) {
+    TVizinho *arestaA = *(TVizinho **)a;
+    TVizinho *arestaB = *(TVizinho **)b;
+    return (arestaA->distancia > arestaB->distancia) - (arestaA->distancia < arestaB->distancia);
+}
+//=================================================
+int buscarIndiceCidade(TGrafo *grafo, char *nomeCidade) {
+    for (int i = 0; i < grafo->numCidades; i++) {
+        if (strcmp(grafo->cidades[i].nome, nomeCidade) == 0) {
+            return i;  // Retorna o índice da cidade
+        }
+    }
+    return -1;  // Cidade não encontrada
+}
+
+// Função para encontrar e ordenar as arestas no grafo
+void ordenarArestas(TGrafo *grafo, TVizinho **arestasOrdenadas, int *numArestas) {
+    int totalArestas = 0;
+    // Conta todas as arestas e armazena os ponteiros para ordenação
+    for (int i = 0; i < grafo->numCidades; i++) {
+        TVizinho *vizinho = grafo->cidades[i].vizinhos;
+        while (vizinho != NULL) {
+            int indiceVizinho = buscarIndiceCidade(grafo, vizinho->nome);
+            if (i < indiceVizinho) { // Evita duplicação de arestas bidirecionais
+                arestasOrdenadas[totalArestas++] = vizinho;
+            }
+            vizinho = vizinho->prox;
+        }
+    }
+    *numArestas = totalArestas;
+
+    // Função de comparação e ordenação das arestas por peso
+    qsort(arestasOrdenadas, *numArestas, sizeof(TVizinho *), compararArestas);
+}
+
+void exibirAGM(TGrafo *grafo) {
+    printf("\nArestas da Árvore Geradora Mínima (AGM):\n");
+    for (int i = 0; i < grafo->numCidades; i++) {
+        TVizinho *vizinho = grafo->cidades[i].vizinhos;
+        while (vizinho != NULL) {
+            // Exibe apenas arestas que foram marcadas como parte da AGM
+            if (vizinho->incluidoAGM) {
+                printf("Cidade: %s - Vizinho: %s, Distância: %.2f\n",
+                       grafo->cidades[i].nome, vizinho->nome, vizinho->distancia);
+            }
+            vizinho = vizinho->prox;
+        }
+    }
+}
+
+// aloritimo prism 
+void primAGM(TGrafo *grafo, int cidadeInicial) {
+    // Inicializa o array de cidades visitadas
+    int *visitado = calloc(grafo->numCidades, sizeof(int));
+    visitado[cidadeInicial] = 1;  // Começa pela cidade inicial
+
+    printf("Árvore Geradora Mínima (AGM) usando o Algoritmo de Prim:\n");
+
+    for (int numVisitados = 1; numVisitados < grafo->numCidades; numVisitados++) {
+        double menorPeso = INFINITY;
+        int u = -1, v = -1;
+        TVizinho *vizinhoSelecionado = NULL;
+
+        // Procura a menor aresta que conecta o conjunto de nós visitados com o restante
+        for (int i = 0; i < grafo->numCidades; i++) {
+            if (visitado[i]) {
+                TVizinho *vizinho = grafo->cidades[i].vizinhos;
+                while (vizinho != NULL) {
+                    int indiceVizinho = buscarIndiceCidade(grafo, vizinho->nome);
+                    
+                    // Verifica se a cidade vizinha ainda não foi visitada e se a aresta é a menor encontrada
+                    if (!visitado[indiceVizinho] && vizinho->distancia < menorPeso) {
+                        menorPeso = vizinho->distancia;
+                        u = i;  // Armazena o índice da cidade atual
+                        v = indiceVizinho;  // Armazena o índice da cidade vizinha
+                        vizinhoSelecionado = vizinho;  // Guarda a referência para o vizinho selecionado
+                    }
+                    vizinho = vizinho->prox;
+                }
+            }
+        }
+
+        // Marcar o nó vizinho selecionado como visitado e a aresta como parte da AGM
+        if (v != -1 && vizinhoSelecionado != NULL) {
+            visitado[v] = 1;
+            vizinhoSelecionado->incluidoAGM = 1;  // Marca a aresta como parte da AGM
+            
+            // Também marca a aresta reversa na cidade vizinha para refletir a inclusão bidirecional na AGM
+            TVizinho *vizinhoReverso = grafo->cidades[v].vizinhos;
+            while (vizinhoReverso != NULL) {
+                if (strcmp(vizinhoReverso->nome, grafo->cidades[u].nome) == 0) {
+                    vizinhoReverso->incluidoAGM = 1;
+                    break;
+                }
+                vizinhoReverso = vizinhoReverso->prox;
+            }
+
+            printf("Aresta escolhida: %s - %s, Peso: %.2f\n", grafo->cidades[u].nome, grafo->cidades[v].nome, menorPeso);
+        }
+    }
+    
+    free(visitado);
+}
+
+// Algoritimo kruskal 
+void kruskalAGM(TGrafo *grafo) {
+    int numCidades = grafo->numCidades;
+    int numArestas = 0;
+    
+    // Aloca espaço para armazenar os ponteiros das arestas para ordenação
+    TVizinho **arestasOrdenadas = malloc(sizeof(TVizinho *) * numCidades * numCidades);
+
+    // Passo 1: Coleta e ordena as arestas
+    ordenarArestas(grafo, arestasOrdenadas, &numArestas);
+
+    // Inicializa estruturas Union-Find
+    int *pai = malloc(numCidades * sizeof(int));
+    int *rank = calloc(numCidades, sizeof(int));
+    for (int i = 0; i < numCidades; i++) pai[i] = i;
+
+    printf("Árvore Geradora Mínima (AGM) usando o Algoritmo de Kruskal:\n");
+
+    // Passo 3: Seleciona as arestas de menor peso sem formar ciclos
+    for (int i = 0; i < numArestas; i++) {
+        TVizinho *aresta = arestasOrdenadas[i];
+        int u = buscarIndiceCidade(grafo, grafo->cidades[i].nome); // índice de origem
+        int v = buscarIndiceCidade(grafo, aresta->nome); // índice de destino
+
+        if (u == -1 || v == -1) {
+            printf("Erro: Cidade não encontrada.\n");
+            continue;
+        }
+
+        if (find(pai, u) != find(pai, v)) {
+            // Marca a aresta como parte da AGM
+            aresta->incluidoAGM = 1;
+            
+            // Marca a aresta reversa na cidade vizinha para garantir inclusão bidirecional
+            TVizinho *vizinhoReverso = grafo->cidades[v].vizinhos;
+            while (vizinhoReverso != NULL) {
+                if (strcmp(vizinhoReverso->nome, grafo->cidades[u].nome) == 0) {
+                    vizinhoReverso->incluidoAGM = 1;
+                    break;
+                }
+                vizinhoReverso = vizinhoReverso->prox;
+            }
+
+            // Exibe a aresta adicionada à AGM
+            printf("Aresta escolhida: %s - %s, Peso: %.2f\n",
+                   grafo->cidades[u].nome, aresta->nome, aresta->distancia);
+
+            // Une os conjuntos
+            unionSets(pai, rank, u, v);
+        }
+    }
+
+    // Libera memória alocada
+    free(arestasOrdenadas);
+    free(pai);
+    free(rank);
+}
+
+void gerarArvoreGerMin(TGrafo *grafo){
+    
+    int tipoAGM;
+    printf("Escolha o algoritmo para AGM (1-Prim, 2-Kruskal): ");
+    tipoAGM = input();
+    if (tipoAGM == 1) {
+        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
+        double ini = clock();
+        primAGM(grafo, 0); // Inicia a partir da cidade 0
+        double fim = clock();
+        exibirAGM(grafo);  // Exibe as arestas da AGM
+        calcularTempo(ini,fim);
+    } else if (tipoAGM == 2) {
+        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
+        double ini = clock();
+        kruskalAGM(grafo);
+        double fim = clock();
+        exibirAGM(grafo);  // Exibe as arestas da AGM
+        calcularTempo(ini,fim);
+    } else {
+        printf("Opção inválida para algoritmo de AGM!\n");
+    }
+}
+
 void autosave(TGrafo *grafo){
     FILE *arq = abrirArquivo(ARQUIVOCIDADES,"w");
     int i = 0;
@@ -291,6 +479,12 @@ void menu(TGrafo *grafo){
             case 5:
                 exibirGrafo(grafo);
                 break;
+            case 6:
+            gerarArvoreGerMin(grafo);
+            break;
+            case 7:
+            exibirGrafo(grafo);
+            break;
             default:
                 printf("\n Opcao Invalida!");
                 break;
