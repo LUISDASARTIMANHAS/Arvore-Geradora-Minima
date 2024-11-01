@@ -30,6 +30,8 @@ if "%fileName%"=="" (
 )
 set fullFileName=%fileName%.V%versao%
 
+pause
+
 :: Inicializa o repositório Git (se necessário)
 if not exist ".git" (
     git init
