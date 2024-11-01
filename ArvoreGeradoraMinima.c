@@ -1,5 +1,5 @@
 // Feito por: Lucas Garcia E Luis Augusto
-#include "grafoCidades.h"
+#include "ArvoreGeradoraMinima.h"
 #include "data/libs/desenharArvore.cpp"
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
