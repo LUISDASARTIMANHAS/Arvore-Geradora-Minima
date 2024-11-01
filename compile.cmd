@@ -34,7 +34,7 @@ if not exist "rascunho" (
     mkdir "rascunho"
 )
 
-g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ "rascunho/%fileName%.c" -o "rascunho.exe"
+gcc -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ "rascunho/%fileName%.c" -o "rascunho.exe"
 
 @REM verifica se a build foi feita com sucesso
 if not exist "builds/rascunho.exe" (
@@ -56,9 +56,9 @@ if not exist "zip" (
 if exist "builds/debug.exe" (
    del "builds/debug.exe"
 )
-g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/debug.exe"
+gcc -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/debug.exe"
 
-g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/%fullFileName%.exe"
+gcc -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/%fullFileName%.exe"
 
 @REM verifica se a build foi feita com sucesso 
 if not exist "builds/%fullFileName%.exe" (
