@@ -2,7 +2,7 @@
 #include "grafoCidades.h"
 #include "../data/libs/fileSys.cpp"
 
-
+//=================================================
 void exibirAGM(TGrafo *grafo) {
     printf("\nArestas da Árvore Geradora Mínima (AGM):\n");
     for (int i = 0; i < grafo->numCidades; i++) {
@@ -17,7 +17,7 @@ void exibirAGM(TGrafo *grafo) {
         }
     }
 }
-
+//=================================================
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
     for (int i = 0; i < grafo->numCidades; i++) {
@@ -63,8 +63,7 @@ void inserirCidade(TGrafo *grafo, string nomeCidade) {
     grafo->cidades[grafo->numCidades].vizinhos = NULL;
     grafo->numCidades++;
 }
-
-
+//=================================================
 void exibirCidade(TGrafo *grafo, char *nomeCidade) {
     TCidade *cidade = buscarCidade(grafo, nomeCidade);
 
@@ -203,10 +202,12 @@ double validarPeso(){
     value = inputDouble();
     return value;
 }
+//=================================================
 void validarCidade(char *destino){
     printf("\n Digite a Cidade: ");
     inputS(destino);
 }
+//=================================================
 void validarVizinho(TGrafo *grafo,string nomeCidade, char *destino){
     TCidade *cidade = buscarCidade(grafo, nomeCidade);
 
@@ -217,12 +218,13 @@ void validarVizinho(TGrafo *grafo,string nomeCidade, char *destino){
     printf("\n Digite o Vizinho: ");
     inputS(destino);
 }
-
+//=================================================
 void cadastrarCidade(TGrafo *grafo){
     string nomeCidade;
     validarCidade(nomeCidade);
     inserirCidade(grafo, nomeCidade);
 }
+//=================================================
 void cadastrarVizinho(TGrafo *grafo){
     string nomeCidade, nomeVizinho;
     double distancia;
@@ -233,18 +235,19 @@ void cadastrarVizinho(TGrafo *grafo){
     inserirVizinho(grafo,nomeCidade,nomeVizinho,distancia);
     inserirVizinho(grafo,nomeVizinho,nomeCidade,distancia);
 }
+//=================================================
 void deletarCidade(TGrafo *grafo){
     string nomeCidade;
     validarCidade(nomeCidade);
     removerCidade(grafo,nomeCidade);
 }
-
+//=================================================
 void exibirCidadeEVizinho(TGrafo *grafo){
     string nomeCidade;
     validarCidade(nomeCidade);
     exibirCidade(grafo,nomeCidade);
 }
-
+//=================================================
 void autosave(TGrafo *grafo){
     FILE *arq = abrirArquivo(ARQUIVOCIDADES,"w");
     int i = 0;
@@ -270,14 +273,13 @@ void autosave(TGrafo *grafo){
     printf("\n Auto Save Completo!");
 }
 //=================================================
-
 // Funções auxiliares para Union-Find
 int find(int *pai, int i) {
     if (pai[i] != i)
         pai[i] = find(pai, pai[i]);
     return pai[i];
 }
-
+//=================================================
 void unionSets(int *pai, int *rank, int u, int v) {
     int raizU = find(pai, u);
     int raizV = find(pai, v);
@@ -290,13 +292,13 @@ void unionSets(int *pai, int *rank, int u, int v) {
         rank[raizU]++;
     }
 }
-
+//=================================================
 int compararArestas(const void *a, const void *b) {
     TVizinho *arestaA = *(TVizinho **)a;
     TVizinho *arestaB = *(TVizinho **)b;
     return (arestaA->distancia > arestaB->distancia) - (arestaA->distancia < arestaB->distancia);
 }
-
+//=================================================
 int buscarIndiceCidade(TGrafo *grafo, char *nomeCidade) {
     for (int i = 0; i < grafo->numCidades; i++) {
         if (strcmp(grafo->cidades[i].nome, nomeCidade) == 0) {
@@ -305,8 +307,7 @@ int buscarIndiceCidade(TGrafo *grafo, char *nomeCidade) {
     }
     return -1;  // Cidade não encontrada
 }
-
-
+//=================================================
 // Função para encontrar e ordenar as arestas no grafo
 void ordenarArestas(TGrafo *grafo, TVizinho **arestasOrdenadas, int *numArestas) {
     int totalArestas = 0;
@@ -326,7 +327,7 @@ void ordenarArestas(TGrafo *grafo, TVizinho **arestasOrdenadas, int *numArestas)
     // Função de comparação e ordenação das arestas por peso
     qsort(arestasOrdenadas, *numArestas, sizeof(TVizinho *), compararArestas);
 }
-
+//=================================================
 void kruskalAGM(TGrafo *grafo) {
     int numCidades = grafo->numCidades;
     int numArestas = 0;
@@ -383,7 +384,7 @@ void kruskalAGM(TGrafo *grafo) {
     free(pai);
     free(rank);
 }
-
+//=================================================
 void primAGM(TGrafo *grafo, int cidadeInicial) {
     // Inicializa o array de cidades visitadas
     int *visitado = calloc(grafo->numCidades, sizeof(int));
@@ -436,7 +437,7 @@ void primAGM(TGrafo *grafo, int cidadeInicial) {
     
     free(visitado);
 }
-
+//=================================================
 void gerarArvoreGerMin(TGrafo *grafo){
     
     int tipoAGM;
@@ -446,16 +447,14 @@ void gerarArvoreGerMin(TGrafo *grafo){
         printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
         double ini = clock();
         primAGM(grafo, 0); // Inicia a partir da cidade 0
-        double fim = clock();
+        calcularTempo(ini);
         exibirAGM(grafo);  // Exibe as arestas da AGM
-        calcularTempo(ini,fim);
     } else if (tipoAGM == 2) {
         printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
         double ini = clock();
         kruskalAGM(grafo);
-        double fim = clock();
+        calcularTempo(ini);
         exibirAGM(grafo);  // Exibe as arestas da AGM
-        calcularTempo(ini,fim);
     } else {
         printf("Opção inválida para algoritmo de AGM!\n");
     }
