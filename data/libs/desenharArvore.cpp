@@ -2,7 +2,7 @@
 #include "desenharArvore.h"
 
 void montarArvore (){
-    int tamanho,i,j;
+    int tamanho,i,j,star;
 
     printf("Tamanho: ");
     tamanho = input();
@@ -12,9 +12,13 @@ void montarArvore (){
         
         for (j = 0; j <= tamanho; j++){
             // define o espacamento
-            printf("%d",j);
+            printf(" ");
         }
         printf("\n");
     }
+    for ( star = i; star <= i*2-1; star++){
+        /* code */
+    }
+    
     printf("\n");
     }
