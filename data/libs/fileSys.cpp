@@ -104,6 +104,11 @@ int inputBoleano(){
 	return value;
 }
 
+void calcularTempo(double ini, double fim) {
+    double tempoDecorrido = (double)(fim - ini) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao: %f segundos\n", tempoDecorrido);
+}
+
 /**
  * @brief // input para captar Strings do teclado do usuario
  */

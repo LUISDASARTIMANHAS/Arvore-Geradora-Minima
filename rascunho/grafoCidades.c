@@ -437,6 +437,29 @@ void primAGM(TGrafo *grafo, int cidadeInicial) {
     free(visitado);
 }
 
+void gerarArvoreGerMin(TGrafo *grafo){
+    
+    int tipoAGM;
+    printf("Escolha o algoritmo para AGM (1-Prim, 2-Kruskal): ");
+    tipoAGM = input();
+    if (tipoAGM == 1) {
+        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
+        double ini = clock();
+        primAGM(grafo, 0); // Inicia a partir da cidade 0
+        double fim = clock();
+        exibirAGM(grafo);  // Exibe as arestas da AGM
+        calcularTempo(ini,fim);
+    } else if (tipoAGM == 2) {
+        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
+        double ini = clock();
+        kruskalAGM(grafo);
+        double fim = clock();
+        exibirAGM(grafo);  // Exibe as arestas da AGM
+        calcularTempo(ini,fim);
+    } else {
+        printf("Opção inválida para algoritmo de AGM!\n");
+    }
+}
 
 //=================================================
 void menu(TGrafo *grafo) {
@@ -474,20 +497,7 @@ void menu(TGrafo *grafo) {
                 exibirGrafo(grafo);
                 break;
             case 6: 
-                int tipoAGM;
-                printf("Escolha o algoritmo para AGM (1-Prim, 2-Kruskal): ");
-                tipoAGM = input();
-                if (tipoAGM == 1) {
-                    printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
-                    primAGM(grafo, 0); // Inicia a partir da cidade 0
-                    exibirAGM(grafo);  // Exibe as arestas da AGM
-                } else if (tipoAGM == 2) {
-                    printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
-                    kruskalAGM(grafo);
-                    exibirAGM(grafo);  // Exibe as arestas da AGM
-                } else {
-                    printf("Opção inválida para algoritmo de AGM!\n");
-                }
+                gerarArvoreGerMin(grafo);
                 break;
             default:
                 printf("\n Opcao Invalida!\n");
