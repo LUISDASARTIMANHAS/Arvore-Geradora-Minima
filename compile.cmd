@@ -34,7 +34,17 @@ if not exist "rascunho" (
     mkdir "rascunho"
 )
 
-g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ "rascunho/%fileName%.c" -o "builds/rascunho.exe"
+g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ "rascunho/%fileName%.c" -o "rascunho.exe"
+
+@REM verifica se a build foi feita com sucesso
+if not exist "builds/rascunho.exe" (
+    echo.
+    echo.
+    echo nao foi possivel gerar a build rascunho/%fileName%
+    gcc -Wall -Wextra -g3 "rascunho/%fileName%.c" -o "rascunho.exe"
+    echo.
+    echo.
+)
 
 if not exist "builds" (
     mkdir "builds"
@@ -49,6 +59,16 @@ if exist "builds/debug.exe" (
 g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/debug.exe"
 
 g++ -Wall -g3 -Wextra -static -static-libgcc -static-libstdc++ %fileName%.c -o "builds/%fullFileName%.exe"
+
+@REM verifica se a build foi feita com sucesso 
+if not exist "builds/%fullFileName%.exe" (
+    echo.
+    echo.
+    echo nao foi possivel gerar a build %fileName%
+    gcc -Wall -Wextra -g3 %fileName%.c -o "builds/%fullFileName%.exe"
+    echo.
+    echo.
+)
 
 tar -a -c -f "zip/%fullFileName%.zip" *data *builds *rascunho *.pdf *.h *.c *.c functions.c *.cmd *.md
 

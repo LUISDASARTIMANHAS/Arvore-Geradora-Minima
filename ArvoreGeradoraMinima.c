@@ -1,6 +1,6 @@
 // Feito por: Lucas Garcia E Luis Augusto
 #include "ArvoreGeradoraMinima.h"
-#include "data/libs/desenharArvore.cpp"
+#include "data/libs/fileSys.cpp"
 // Função para exibir todas as cidades e seus vizinhos
 void exibirGrafo(TGrafo *grafo) {
     int count = 0;
@@ -235,6 +235,26 @@ void exibirCidadeEVizinho(TGrafo *grafo){
 }
 
 //=================================================
+// Funções auxiliares para Union-Find
+int find(int *pai, int i) {
+    if (pai[i] != i)
+        pai[i] = find(pai, pai[i]);
+    return pai[i];
+}
+//=================================================
+void unionSets(int *pai, int *rank, int u, int v) {
+    int raizU = find(pai, u);
+    int raizV = find(pai, v);
+    if (rank[raizU] < rank[raizV]) {
+        pai[raizU] = raizV;
+    } else if (rank[raizU] > rank[raizV]) {
+        pai[raizV] = raizU;
+    } else {
+        pai[raizV] = raizU;
+        rank[raizU]++;
+    }
+}
+//=================================================
 int compararArestas(const void *a, const void *b) {
     TVizinho *arestaA = *(TVizinho **)a;
     TVizinho *arestaB = *(TVizinho **)b;
@@ -397,29 +417,51 @@ void kruskalAGM(TGrafo *grafo) {
     free(rank);
 }
 
+void usarAlgoritimoAGMPrim(TGrafo *grafo){
+    printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
+    double ini = clock();
+    primAGM(grafo, 0); // Inicia a partir da cidade 0
+    calcularTempo(ini);
+    exibirAGM(grafo);  // Exibe as arestas da AGM
+}
+
+void usarAlgoritimoAGMKruskal(TGrafo *grafo){
+    printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
+    double ini = clock();
+    kruskalAGM(grafo);
+    calcularTempo(ini);
+    exibirAGM(grafo);  // Exibe as arestas da AGM
+}
+
 void gerarArvoreGerMin(TGrafo *grafo){
-    
-    int tipoAGM;
-    printf("Escolha o algoritmo para AGM (1-Prim, 2-Kruskal): ");
-    tipoAGM = input();
-    if (tipoAGM == 1) {
-        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Prim...\n");
-        double ini = clock();
-        primAGM(grafo, 0); // Inicia a partir da cidade 0
-        double fim = clock();
-        exibirAGM(grafo);  // Exibe as arestas da AGM
-        calcularTempo(ini,fim);
-    } else if (tipoAGM == 2) {
-        printf("Gerando Árvore Geradora Mínima usando o Algoritmo de Kruskal...\n");
-        double ini = clock();
-        kruskalAGM(grafo);
-        double fim = clock();
-        exibirAGM(grafo);  // Exibe as arestas da AGM
-        calcularTempo(ini,fim);
-    } else {
-        printf("Opção inválida para algoritmo de AGM!\n");
+    int opc = -1;
+    while (opc != 0) {
+        printf("\n======= Escolha o algoritmo para AGM =======\n");
+        printf("1 - Algoritmo Prim\n");
+        printf("2 - Algoritmo Kruskal\n");
+        printf("0 - Voltar\n");
+        printf("=====================\n");
+        printf("Insira uma opcao: ");
+        opc = input();
+        
+        switch (opc) {
+            case 0:
+                printf("\n Voltando e Salvando automaticamente...");
+                // autosave(grafo);
+                break;
+            case 1:
+                usarAlgoritimoAGMPrim(grafo);
+                break;
+            case 2:
+                usarAlgoritimoAGMKruskal(grafo);
+                break;
+            default:
+                printf("\n Opcao Invalida!\n");
+                break;
+        }
     }
 }
+
 
 void autosave(TGrafo *grafo){
     FILE *arq = abrirArquivo(ARQUIVOCIDADES,"w");
@@ -448,22 +490,23 @@ void autosave(TGrafo *grafo){
 //=================================================
 void menu(TGrafo *grafo){
     int opc = -1;
-    while (opc != 0){
+    while (opc != 0) {
         printf("\n======= GRAFO DE CIDADES =======\n");
         printf("1 - Inserir Cidade\n");
         printf("2 - Inserir Vizinho\n");
-        printf("3 - Remover Vizinho e Cidade \n");
-        printf("4 - Imprimir Cidade e seu Vizinhos \n");
+        printf("3 - Remover Vizinho e Cidade\n");
+        printf("4 - Imprimir Cidade e seus Vizinhos\n");
         printf("5 - Imprimir Todo o Grafo\n");
+        printf("6 - Gerar Arvore Geradora Minima\n");
         printf("0 - Sair\n");
         printf("=====================\n");
         printf("Insira uma opcao: ");
         opc = input();
-
-            switch (opc){
+        
+        switch (opc) {
             case 0:
                 printf("\n Saindo e Salvando automaticamente...");
-                break; 
+                break;
             case 1:
                 cadastrarCidade(grafo);
                 break;
@@ -479,16 +522,13 @@ void menu(TGrafo *grafo){
             case 5:
                 exibirGrafo(grafo);
                 break;
-            case 6:
-            gerarArvoreGerMin(grafo);
-            break;
-            case 7:
-            exibirGrafo(grafo);
-            break;
-            default:
-                printf("\n Opcao Invalida!");
+            case 6: 
+                gerarArvoreGerMin(grafo);
                 break;
-            }
+            default:
+                printf("\n Opcao Invalida!\n");
+                break;
+        }
     }
     autosave(grafo);
     exit(0);

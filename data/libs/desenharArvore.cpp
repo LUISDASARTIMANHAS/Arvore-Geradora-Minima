@@ -1,6 +1,6 @@
 #include "fileSys.cpp"
 #include "desenharArvore.h"
-#include 
+
 
 void montarArvore(){
     int tamanho,i,j,star;
@@ -40,11 +40,4 @@ void montarArvoreString(int tamanho,char vetor[]){
     }
     
     printf("\n");
-}
-
-int main(){
-    printf("\n");
-    printf("cidade: xpto");
-    printf("\n\t cidade: xpt2");
-    return 0;
 }

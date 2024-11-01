@@ -1,5 +1,5 @@
 // Feito por: Lucas Garcia E Luis Augusto
-#include "grafoCidades.h"
+#include "ArvoreGeradoraMinima.h"
 #include "../data/libs/fileSys.cpp"
 
 //=================================================
@@ -11,7 +11,7 @@ void exibirAGM(TGrafo *grafo) {
             // Exibe apenas arestas que foram marcadas como parte da AGM
             if (vizinho->incluidoAGM) {
                 printf("Cidade: %s - Vizinho: %s, Distância: %.2f\n",
-                       grafo->cidades[i].nome, vizinho->nome, vizinho->distancia);
+                    grafo->cidades[i].nome, vizinho->nome, vizinho->distancia);
             }
             vizinho = vizinho->prox;
         }
